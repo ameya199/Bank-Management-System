@@ -1,8 +1,6 @@
 def change_date_format(to_update):
     '''to_update=l[2]'''
     l1=to_update.split("/")
-    print(l1)
-    print(to_update)
     #print(l1)
     temp=l1[0]
     l1[0]=l1[2]

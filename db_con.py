@@ -1,7 +1,6 @@
 import mysql.connector
+
 import frev
-
-
 
 
 def open_db(obj):
@@ -64,8 +63,12 @@ def add_client(client_name):
         return error
 
 
-def add_to_db(s2, t2):
+def add_to_db(s2, t2, do_rollback, do_commit):
     mycursor = mydb.cursor()
+    if do_rollback:
+        mydb.rollback()
+        mydb.close()
+        return
     cli_flag = 0
     add_flag = 0
     try:
@@ -88,23 +91,12 @@ def add_to_db(s2, t2):
             mycursor.execute(sql, s2)
         add_flag = 1
     except mysql.connector.IntegrityError:
-        sql = "UPDATE `details` SET `account_id`=(%s),`transaction_id`=(%s),`trans_date`=(%s),`trans_post_date`=(%s),`cheque_no`=(%s),`description`=(%s),`type`=(%s)," \
-              "`Trans_amt`=(%s),`avail_bal`=(%s),`client`=(%s),`purpose`=(%s),`remarks`=(%s) WHERE `account_id`=(%s) AND`transaction_id`=(%s)"
-
-        sql1 = "UPDATE `details` SET `account_id`=(%s),`transaction_id`=(%s),`trans_date`=(%s),`trans_post_date`=(%s),`cheque_no`=(%s),`description`=(%s),`type`=(%s)," \
-               "`Trans_amt`=(%s),`avail_bal`=(%s),`purpose`=(%s),`remarks`=(%s) WHERE `account_id`=(%s) AND`transaction_id`=(%s)"
-
-        s2.append(t2)
-        s2.append(s2[1])
-        if cli_flag:
-            mycursor.execute(sql1, s2)
-        else:
-            mycursor.execute(sql, s2)
-        add_flag = 1
+        return 0
     except:
         pass
-    mydb.commit()
-    mycursor.close()
+    if do_commit:
+        mydb.commit()
+        mycursor.close()
     return add_flag
 
 

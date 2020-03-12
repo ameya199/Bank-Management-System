@@ -1,22 +1,23 @@
-from tkinter import ttk
 import tkinter as tk
-import db_con
-from tkinter import messagebox
-import itertools
-from fileinput import filename
-from tkinter import Entry
 from tkinter import filedialog as fd
+from tkinter import messagebox
+from tkinter import ttk
+
+import db_con
+
 
 class db_obj():
-    host=""
-    user=""
-    password=""
-    db_name=""
-    def __init__(self,host,user,password,db_name):
-        self.host=host
-        self.user=user
-        self.password=password
-        self.db_name=db_name
+    host = ""
+    user = ""
+    password = ""
+    db_name = ""
+
+    def __init__(self, host, user, password, db_name):
+        self.host = host
+        self.user = user
+        self.password = password
+        self.db_name = db_name
+
 
 def add_records():
     separate_lines(f, True)
@@ -61,16 +62,18 @@ def validate_file(new_file):
                         continue
                     else:
                         var = False
-                        messagebox.showwarning("Warning", "Not a valid file")
+                        messagebox.showwarning("Warning", "Not a valid file. Error at Record Number " + str(lines - 1))
                         break
         return var
+
+
 def create_data_base(db_object):
     global db_open
     db_open= db_con.open_db(db_object)
     if db_open:
         messagebox.showerror("Error","Please Enter Valid Fields")
     elif not db_open:
-        messagebox.showinfo("Success","Connection Successfull")
+        messagebox.showinfo("Success", "Connection Successful")
         del db_object
         data_base_setting_frame.destroy()
         ti.destroy()
@@ -104,8 +107,6 @@ def data_base_check():
     data_base_setting_frame_button = tk.Button(data_base_setting_frame,text="Connect Database",command =lambda :create_data_base(db_obj(data_base_setting_frame_host.get(), data_base_setting_frame_user.get(),
                        data_base_setting_frame_password.get(), data_base_setting_frame_database_name.get())))
     data_base_setting_frame_button.pack()
-
-
 
 
 def browse_func():
@@ -229,11 +230,22 @@ def refresh_list():
 
 def add_client_to_db(add_client_mainmenu_text, error):
     client_name = add_client_mainmenu_text.get()
+    # Removing preceeding and succeding spaces
+    while client_name[0] == " " or client_name[0] == "/t":
+        client_name = client_name[1:]
+    while client_name[-1] == " " or client_name[-1] == "/t" or client_name[-1] == "\n":
+        client_name = client_name[0:-1]
+    print(client_name)
+    duplicate_client_error = "Client already exists"
+    for i in choiceso:
+        if i.lower() == client_name.lower():
+            error.labelText = duplicate_client_error
+            error.config(text=duplicate_client_error)
+            return
     data = db_con.add_client(client_name)
     error.labelText = data
     error.config(text=data)
     refresh_list()
-
 
 
 def remove_client_to_db(checkvalue, r, remove_client_mainmenu_frame):
@@ -243,6 +255,13 @@ def remove_client_to_db(checkvalue, r, remove_client_mainmenu_frame):
     refresh_list()
     update_remove(r, remove_client_mainmenu_frame)
 
+
+def verify_char_length(l):
+    if len(l[-2]) > 200:
+        return False, "Number of characters in purpose field of record "
+    elif len(l[-1]) > 200:
+        return False, "Number of characters in remarks field of record "
+    return True, "Success"
 
 
 def print_table(l, r, flag):
@@ -263,12 +282,12 @@ def print_table(l, r, flag):
 
     else:
         for i in l:
-            if i == "CR":
+            if i == "CR" and l.index(i) == 6:
                 tk.Label(frame, text="+", wraplength=200, justify="left", fg="green", font="20").grid(row=r, column=c,
                                                                                                       sticky="WE",
                                                                                                       ipadx=5, ipady=10)
                 c += 1
-            elif i == "DR":
+            elif i == "DR" and l.index(i) == 6:
                 tk.Label(frame, text="-", wraplength=200, justify="left", fg="red", font="20").grid(row=r, column=c,
                                                                                                     sticky="WE",
                                                                                                     ipadx=5, ipady=10)
@@ -281,6 +300,7 @@ def print_table(l, r, flag):
 
 
 def separate_lines(f, add):
+    global total_records
     f.seek(0)
     flag = [False]
     r = 0
@@ -316,6 +336,7 @@ def separate_lines(f, add):
             if not add:
                 print_table(l, r, flag)
                 r += 1
+                total_records += 1
             else:
                 if l[0] == "No.":
                     continue
@@ -324,20 +345,33 @@ def separate_lines(f, add):
                     l.append(text[1][r].get('1.0', tk.END))
                     l.append(text[2][r].get('1.0', tk.END))
                     r += 1
-                    check = db_con.add_to_db(l, t2)
-                    if not check :
-                        final_check =0
-                        messagebox.showerror("Error", "Adding to Database Failed!Try Again")
+                    # check = db_con.add_to_db(l, t2)
+                    check, error = verify_char_length(l)
+                    error = error + l[0] + " exceeded"
+                    if not check:
+                        final_check = 0
+                        check_addrecords = db_con.add_to_db(l, t2, True, False)
+                        messagebox.showerror("Error", error)
                         break
+                    else:
+                        if l[0] == str(total_records - 1):
+                            check_addrecords = db_con.add_to_db(l, t2, False, True)
+                        else:
+                            check_addrecords = db_con.add_to_db(l, t2, False, False)
+                        if not check_addrecords:
+                            final_check = 0
+                            messagebox.showerror("Error", "Duplicate entry for record " + str(l[0]))
+                            break
     if not add:
-        b1 = tk.Button(frame, text="Add Records To Database", command=(lambda :add_records()))
+        b1 = tk.Button(frame, text="Add Records To Database", command=(lambda: add_records()))
         b1.grid(column=5, columnspan=3)
     if final_check and add:
-        messagebox.showinfo("Success","Records Added Succesfully")
+        messagebox.showinfo("Success", str(total_records - 1) + " records added to database")
+
 
 def add_client_mainmenu():
     if db_open:
-        messagebox.showerror("Error","Create a Database Function First")
+        messagebox.showerror("Error", "Create a Database Function First")
         data_base_check()
     else:
         global root
@@ -353,93 +387,6 @@ def add_client_mainmenu():
         add_client_mainmenu_button.grid(row="7")
         error.grid()
 
-def display_search_name(records, data_retrieve_frame,):
-    data_retrieve_frame.destroy()
-    display_search_name_frame = tk.Frame(t)
-    display_search_name_frame.pack()
-    r = 0
-    c = 0
-    #list = [[]]
-    for record in records:
-        print(record)
-        import itertools
-        listi = list(record)
-        #listi = record1.split(",")
-        for l in listi:
-            tk.Label(display_search_name_frame, text=l, wraplength=200, justify="left").grid(row=r, column=c, sticky="WE", ipadx=5,
-                                                                         ipady=10)
-            c += 1
-        c = 0
-        r += 1
-
-
-
-def call_name_db(name,data_retrieve_frame):
-    records = db_con.fetch_from_db(name)
-    if len(records) == 0 :
-        messagebox.showerror("Error","No such Client found")
-    else:
-        display_search_name(records,data_retrieve_frame)
-
-
-def Retrieve_from_database():
-    if db_open:
-        messagebox.showerror("Error", "Create a Database Function First")
-        data_base_check()
-    else:
-        global root
-        global t
-        t = tk.Toplevel(root)
-        t.geometry('1000x800')
-        t.grab_set()
-
-        data_retrieve_frame = tk.Frame(t, borderwidth=0, highlightthickness=0)
-        data_retrieve_frame.pack()
-
-        clicked = tk.StringVar()
-        mylabel = tk.Label(data_retrieve_frame,text= clicked.get())
-        mylabel.grid(row=0)
-        options = [
-            "Search By name",
-            "Search By Date",
-
-        ]
-
-        clicked.set(options[0])
-        drop = tk.OptionMenu(data_retrieve_frame,clicked,*options)
-        drop.grid(row=1)
-
-        tk.Label(data_retrieve_frame,text="Search By name").grid(row="10")
-        name_text = tk.Entry(data_retrieve_frame, width=40)
-        name_text.grid(row="11",pady="30",ipady="20")
-        add_client_mainmenu_button = tk.Button(data_retrieve_frame, text="Search Client",
-                                               command=(lambda: call_name_db(name_text.get(),data_retrieve_frame)),
-                                               bg="#7f7fff", fg="white")
-
-        add_client_mainmenu_button.grid(row="12")
-
-        '''from tkcalendar import Calendar
-
-        def pick_date_dialog():
-            Display GUI date picker dialog,
-               print date selected when OK clicked
-
-            def print_sel():
-                selected_date = (cal.get_date())
-
-                date1 = tk.Label(t, text=selected_date)
-                date1.pack()z
-
-            top = tk.Toplevel(t)
-
-            # defaults to today's date
-            cal = Calendar(top,
-                           font="Arial 10", background='darkblue',
-                           foreground='white', selectmode='day')
-
-            cal.grid()
-            ttk.Button(top, text="OK", command=print_sel).grid()
-    pick_date_dialog()'''
 
 def remove_client_mainmenu():
     if db_open:
@@ -474,12 +421,97 @@ def on_closing():
     global f, file_open, db_open
     if file_open:
         f.close()
-    if db_open==0:
+    if db_open == 0:
         db_con.close_db()
     root.destroy()
 
 
+def display_search_name(records, data_retrieve_frame, ):
+    data_retrieve_frame.destroy()
+    display_search_name_frame = tk.Frame(t)
+    display_search_name_frame.pack()
+    r = 0
+    c = 0
+    # list = [[]]
+    for record in records:
+        print(record)
+        listi = list(record)
+        # listi = record1.split(",")
+        for l in listi:
+            tk.Label(display_search_name_frame, text=l, wraplength=200, justify="left").grid(row=r, column=c,
+                                                                                             sticky="WE", ipadx=5,
+                                                                                             ipady=10)
+            c += 1
+        c = 0
+        r += 1
 
+
+def call_name_db(name, data_retrieve_frame):
+    records = db_con.fetch_from_db(name)
+    if len(records) == 0:
+        messagebox.showerror("Error", "No such Client found")
+    else:
+        display_search_name(records, data_retrieve_frame)
+
+
+def Retrieve_from_database():
+    if db_open:
+        messagebox.showerror("Error", "Create a Database Function First")
+        data_base_check()
+    else:
+        global root
+        global t
+        t = tk.Toplevel(root)
+        t.geometry('1000x800')
+        t.grab_set()
+
+        data_retrieve_frame = tk.Frame(t, borderwidth=0, highlightthickness=0)
+        data_retrieve_frame.pack()
+
+        clicked = tk.StringVar()
+        mylabel = tk.Label(data_retrieve_frame, text=clicked.get())
+        mylabel.grid(row=0)
+        options = [
+            "Search By name",
+            "Search By Date",
+
+        ]
+
+        clicked.set(options[0])
+        drop = tk.OptionMenu(data_retrieve_frame, clicked, *options)
+        drop.grid(row=1)
+
+        tk.Label(data_retrieve_frame, text="Search By name").grid(row="10")
+        name_text = tk.Entry(data_retrieve_frame, width=40)
+        name_text.grid(row="11", pady="30", ipady="20")
+        add_client_mainmenu_button = tk.Button(data_retrieve_frame, text="Search Client",
+                                               command=(lambda: call_name_db(name_text.get(), data_retrieve_frame)),
+                                               bg="#7f7fff", fg="white")
+
+        add_client_mainmenu_button.grid(row="12")
+
+        '''from tkcalendar import Calendar
+
+        def pick_date_dialog():
+            Display GUI date picker dialog,
+               print date selected when OK clicked
+
+            def print_sel():
+                selected_date = (cal.get_date())
+
+                date1 = tk.Label(t, text=selected_date)
+                date1.pack()z
+
+            top = tk.Toplevel(t)
+
+            # defaults to today's date
+            cal = Calendar(top,
+                           font="Arial 10", background='darkblue',
+                           foreground='white', selectmode='day')
+
+            cal.grid()
+            ttk.Button(top, text="OK", command=print_sel).grid()
+    pick_date_dialog()'''
 
 
 root = tk.Tk()
@@ -489,7 +521,7 @@ v = []
 choiceso = []
 db_open=1
 data_base_check()
-
+total_records = 0
 place = [[]]
 text = [[] for i in range(3)]
 text1 = [[] for i in range(3)]

@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8889def-08ff-4296-8ee4-1e847bdf82a7" name="Default Changelist" comment="Ritrieval Left">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/demo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_con.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_con.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frev.py" beforeDir="false" afterPath="$PROJECT_DIR$/frev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/try.py" beforeDir="false" afterPath="$PROJECT_DIR$/try.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +37,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cover.py" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -211,6 +219,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Ritrieval Left" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="361" y="72" key="#Notifications" timestamp="1584018392930">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="72" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1584018392930" />
     <state x="526" y="215" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577083299776">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -219,6 +231,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="517" y="248" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.824@0.0.1536.824" timestamp="1578551919086" />
+    <state x="449" y="149" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584017802805">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="149" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824@0.0.1536.824" timestamp="1584017802805" />
     <state x="416" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1582818396644">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -228,10 +244,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="496" y="38" key="#numpy/0.0.1536.824@0.0.1536.824" timestamp="1577249433567" />
-    <state x="264" y="0" key="CommitChangelistDialog2" timestamp="1582976080318">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1584026702680">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="264" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1582976080318" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1584026702680" />
     <state x="133" y="56" key="DiffContextDialog" timestamp="1582975977222">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -241,35 +258,35 @@
     </state>
     <state x="458" y="126" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1582723966466" />
     <state x="549" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1578551898270" />
-    <state width="1281" height="103" key="GridCell.Tab.0.bottom" timestamp="1582819214680">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1584026702837">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1281" height="103" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1582819214680" />
-    <state width="1515" height="234" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1580843242732" />
-    <state width="1281" height="103" key="GridCell.Tab.0.center" timestamp="1582819214679">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584026702837" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1584026702837">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1281" height="103" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1582819214679" />
-    <state width="1515" height="234" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1580843242732" />
-    <state width="1281" height="103" key="GridCell.Tab.0.left" timestamp="1582819214679">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584026702837" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1584026702837">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1281" height="103" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1582819214679" />
-    <state width="1515" height="234" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1580843242732" />
-    <state width="1281" height="103" key="GridCell.Tab.0.right" timestamp="1582819214679">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584026702837" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1584026702837">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1281" height="103" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1582819214679" />
-    <state width="1515" height="234" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1580843242732" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584026702837" />
     <state x="370" y="51" key="RollbackChangesDialog" timestamp="1582975960122">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="370" y="51" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1582975960122" />
-    <state x="231" y="0" key="SettingsEditor" timestamp="1582723994457">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="277" y="54" key="SettingsEditor" timestamp="1583944966080">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="231" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1582723994457" />
-    <state x="277" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1577694639413" />
+    <state x="277" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1583944966080" />
     <state x="233" y="75" key="Vcs.Push.Dialog.v2" timestamp="1582975386232">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
